@@ -1,5 +1,5 @@
 # rust-api-example
-An example API using Rust and Postgres.
+An example API using Rust and Postgres based on a combination of a few different web tutorials and framework documentation.
 
 - The database framework is [Diesel](https://diesel.rs/).
 - The API framework is [Rocket](https://rocket.rs/).
