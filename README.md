@@ -1,14 +1,14 @@
 # rust-api-example
 An example API using Rust and Postgres.
 
-- The database framework is Diesel.
-- The API framework is Rocket.
+- The database framework is [Diesel](https://diesel.rs/).
+- The API framework is [Rocket](https://rocket.rs/).
 
 ## How to use
 
 ### Prerequisites
 - Docker
-- Rustup
+- [Rustup](https://www.rust-lang.org/tools/install)
 NB: If you don't have Rust installed and don't want to install it, remove the commented out section
 from `docker-compose.yml` and `.env`.  However, currently the file watch functionality isn't working
 correctly on Windows OS.
