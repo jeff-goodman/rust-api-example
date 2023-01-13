@@ -3,27 +3,30 @@ An example API using Rust and Postgres based on a combination of a few different
 
 - The database framework is [Diesel](https://diesel.rs/).
 - The API framework is [Rocket](https://rocket.rs/).
+- File watcher reloading using [cargo-watch](https://crates.io/crates/cargo-watch).
 
 ## How to use
 
 ### Prerequisites
 - Docker
-- [Rustup](https://www.rust-lang.org/tools/install)
-NB: If you don't have Rust installed and don't want to install it, remove the commented out section
-from `docker-compose.yml` and `.env`.  However, currently the file watch functionality isn't working
-correctly on Windows OS.
+
+This example does not require Rust or Postgres to be installed locally. 
+
+The `cargo watch` command that runs when the container starts works best on Linux (not Windows) if you want it to detect file changes.
+
+If you are using WSL, clone this repo on the WSL drive rather than a mounted drive to get automatic reloading on file changes.
 
 ### Running it
 
 1. `docker compose up`
-2. `cargo watch -x run` (or `cargo run` if you don't have cargo-watch installed).
-
-If using the rust-api-server docker container you can skip Step 2.
+2. Sit back and watch it compile ☕
 
 ### Trying it
 
-When the application runs, it will run the database migrations to create a users table and seed it with
-some random example data.
+When the application runs it will: 
+- Create the database
+- Run the database migrations to create a users table
+- Seed the users table with some random example data.
 
 Try accessing a GET endpoint `http://localhost:8000/users` or `http://localhost:8000/version`.
 NB: The API endpoints are configured so the content-type on the request must be set to `application/json`.

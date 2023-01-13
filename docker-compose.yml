@@ -5,18 +5,24 @@ networks:
     name: rust_api
 
 services:
-  rust_api_db:
-    image: postgres
-    container_name: rust_api_db
+  rust_api_server:
+    build: ./.docker/api_server
+    container_name: rust_api_server
     restart: always
     ports:
-      - 5432:5432
-    env_file:
+      - 8000:8000
+    depends_on:
+      pg_db:
+        condition: service_healthy
+    volumes:
+      - ./:/api_server/
+    env_file: 
       - .env
+    command: bash -c "diesel setup && cargo watch -x run"
     networks:
       rust_api:
         aliases:
-          - rust_api_db
+          - rust_api_server
 
   adminer:
     image: adminer
@@ -25,29 +31,32 @@ services:
     ports:
       - 8080:8080
     depends_on:
-      - rust_api_db
+      pg_db:
+        condition: service_healthy
     networks:
       rust_api:
         aliases:
           - rust_api_adminer
+  
+  pg_db:
+    image: postgres
+    ports:
+      - 5432:5432
+    container_name: pg_db
+    restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d rust_api_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      rust_api:
+        aliases:
+          - pg_db
 
-  # rust_api_server:
-  #   build: 
-  #     context: ./.docker/api_server
-  #     dockerfile: Dockerfile
-  #     args:
-  #       - database_url=${DATABASE_URL}
-  #   container_name: rust_api_server
-  #   restart: always
-  #   depends_on:
-  #     - rust_api_db
-  #   ports:
-  #     - 8000:8000
-  #   volumes:
-  #     - ./:/api_server/
-  #   env_file: 
-  #     - .env
-  #   networks:
-  #     rust_api:
-  #       aliases:
-  #         - rust_api_server
+volumes:
+  pgdata: {}
