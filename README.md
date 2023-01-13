@@ -29,7 +29,7 @@ When the application runs it will:
 - Run the database migrations to create a users table
 - Seed the users table with some random example data.
 
-Try accessing a GET endpoint `http://localhost:8000/users` or `http://localhost:8000/version`.
+Try accessing a GET endpoint `http://localhost:8000/users` or `http://localhost:8000/users/{userId}` or `http://localhost:8000/version`.
 NB: The API endpoints are configured so the content-type on the request must be set to `application/json`.
 
 View the database using Adminer on `http://localhost:8080` and enter the following connection details:
