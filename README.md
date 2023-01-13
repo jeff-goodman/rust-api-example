@@ -4,6 +4,7 @@ An example API using Rust and Postgres based on a combination of a few different
 - The database framework is [Diesel](https://diesel.rs/).
 - The API framework is [Rocket](https://rocket.rs/).
 - File watcher reloading using [cargo-watch](https://crates.io/crates/cargo-watch).
+- Database admin using [Adminer](https://www.adminer.org/).
 
 ## How to use
 
@@ -30,3 +31,9 @@ When the application runs it will:
 
 Try accessing a GET endpoint `http://localhost:8000/users` or `http://localhost:8000/version`.
 NB: The API endpoints are configured so the content-type on the request must be set to `application/json`.
+
+View the database using Adminer on `http://localhost:8080` and enter the following connection details:
+- System: PostgreSQL
+- Server: pg_db
+- Username: postgres
+- Password: sheldon
